@@ -1,0 +1,99 @@
+/* Nome: Ana Carolina R. Barbosa
+ * RA: 163755 
+ * Laboratorio 07 - Filas de Prioridade com Duas Extremidades */
+ 
+ 
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 259
+
+
+typedef struct vetor {
+  int min;
+  int max;
+} heap;
+
+
+void min_heap(heap V[], int n, int pai) {
+  int novo, indice = 2*pai;
+  
+  if(indice < n){
+    /* Aponta para o menor dos filhos */
+    if((indice < n-1) && (V[indice].min > V[indice + 1].min))
+      indice ++;
+    
+    /* Se o pai for maior que o filho, troca os elementos e chama a recursao */  
+    if(V[pai].min > V[indice].min){
+      novo = V[pai].min;
+      V[pai].min = V[indice].min;
+      V[indice].min = novo;
+      min_heap(V, n, indice); 
+    }
+  }
+}  
+      
+
+void max_heap(heap V[], int n, int pai) {
+  int novo, indice = 2*pai;
+  
+  if(indice < n){
+    /* Aponta para o maior dos filhos */
+    if((indice < n-1) && (V[indice].max < V[indice + 1].max))
+      indice++;
+    
+    /* Se o pai for menor que o filho, troca os elementos e chama a recursao */ 
+    if(V[indice/2].max < V[indice].max) {
+      novo = V[indice/2].max;
+      V[indice/2].max = V[indice].max;
+      V[indice].max = novo;
+      max_heap(V, n, indice);
+    }
+  }
+}
+
+
+void constroi_heap(heap V[], int n) {
+  int i;
+  for(i = n/2; i > 0; i--)
+    max_heap(V, n, i);
+  for(i = n/2; i > 0; i--)
+    min_heap(V, n, i);
+  
+  
+}
+
+
+
+int main (){
+  heap V[MAX];
+  int n, i;
+  
+  scanf("%d", &n);
+  
+  for(i=1; i<=n/2; i++)
+    scanf("%d %d", &V[i].min, &V[i].max);
+    
+    
+   
+  for(i=1; i<=n/2; i++){
+    printf("%d, %d - ", V[i].min, V[i].max);
+    printf("\n");
+  }
+  
+  printf("\n");
+ 
+  constroi_heap(V, n/2);
+  
+  for(i=1; i<=n/2; i++)
+    printf("%d ", V[i].min);
+  
+  printf("\n");
+  
+  for(i=1; i<=n/2; i++)
+    printf("%d ", V[i].max);
+   
+  printf("\n");
+  
+  return 0;
+  
+}

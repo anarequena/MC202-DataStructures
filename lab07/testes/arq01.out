@@ -1,0 +1,11 @@
+1
+5
+4
+2
+3
+Fila vazia!
+Fila vazia!
+5
+
+Min-heap:   1   2 
+Max-heap:   4   3 
